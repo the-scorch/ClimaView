@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🌤 ClimaView - Forecasts with Intelligence</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<!-- landing -->
+<div id="landing" class="landing-page">
+  <header class="landing-header">
+    <h1 class="logo">ClimaView</h1>
+  </header>
+  <section class="hero-section">
+    <div class="hero-text">
+      <h2>Smarter Weather Forecasts</h2>
+      <p>Plan with confidence. Get personalized weather updates and air quality.</p>
+      <button id="start-btn" class="btn-primary">Explore Forecasts</button>
+    </div>
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80" alt="Dramatic Weather" class="hero-image"/>
+  </section>  
+</div>
+
+<!-- main dashboard -->
+<main id="main-app" style="display:none;">
+  <header class="dashboard-header">
+    <span class="header-logo">🌤 ClimaView</span>
+    <span class="header-tagline">Smarter Forecasts, Anytime, Anywhere.</span>
+  </header>
+
+  <div id="info-toast" class="dashboard-toast" style="display:none;"></div>
+
+  <nav>
+    <form id="search-form" autocomplete="off">
+      <div class="search-floating-bar">
+        <span class="input-emoji">🏙️</span>
+        <input id="city-input" type="text" placeholder="Add city (eg: Delhi, Mumbai, New York)..." autocomplete="off"/>
+        <ul id="suggestions" class="suggestions-list"></ul>
+        <button id="search-btn" type="submit">
+          <span class="search-btn-icon">🔍</span> Find Weather
+        </button>
+      </div>
+    </form>
+  </nav>
+
+  <section id="city-dashboard" class="city-dashboard">
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
