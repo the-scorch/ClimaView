@@ -28,10 +28,10 @@ export default function App() {
 
         const [weatherResponse, airQualityResponse] = await Promise.all([
           fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,is_day&hourly=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=7`
+            https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,is_day&hourly=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=7
           ),
           fetch(
-            `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=us_aqi,pm10,pm2_5&timezone=auto`
+            https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=us_aqi,pm10,pm2_5&timezone=auto
           ),
         ]);
 
@@ -39,7 +39,7 @@ export default function App() {
         const airQuality = await airQualityResponse.json();
 
         setWeatherData({
-          location: `${name}, ${country}`,
+          location: ${name}, ${country},
           current: weather.current,
           hourly: weather.hourly,
           daily: weather.daily,
@@ -63,7 +63,7 @@ export default function App() {
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
     const year = date.getFullYear();
 
-    return `${day}.${month}.${year}`;
+    return ${day}.${month}.${year};
   }
 
   const getCurrentTime = () => {
@@ -136,7 +136,7 @@ export default function App() {
               {/* Left side */}
               <div className="space-y-8">
                 {/* Temperature */}
-                <div className="flex flex-col items-center justify-center py-8">
+                <div className="flex flex-col item23°s-center justify-center py-8 items-center">
                   <div className="mb-4 text-[200px] font-bold text-foreground">
                     {Math.round(weatherData.current.temperature_2m)}°
                   </div>
@@ -150,22 +150,34 @@ export default function App() {
                   <div className="mb-6 flex gap-3">
                     {weatherData.daily.time.slice(0, 6).map((date, index) => {
                       const dayNames = [
-                        "Today",
+                        "Sun",
                         "Mon",
                         "Tue",
                         "Wed",
                         "Thu",
                         "Fri",
                         "Sat",
-                        "Sun",
                       ];
-                      const dayIndex = new Date(date).getDay();
-                      const dayName =
-                        index === 0 ? "Today" : dayNames[dayIndex];
+                      const today = new Date();
+                      const forecastDate = new Date(date);
+
+                      let dayName;
+                      if (index === 0) {
+                        dayName = "Today";
+                      } else {
+                        dayName = dayNames[forecastDate.getDay()];
+                      }
+
+                      // Use current weather data for today, daily forecast for other days
+                      const isToday = index === 0;
                       const maxTemp = Math.round(
-                        weatherData.daily.temperature_2m_max[index]
+                        isToday
+                          ? weatherData.current.temperature_2m
+                          : weatherData.daily.temperature_2m_max[index]
                       );
-                      const weatherCode = weatherData.daily.weather_code[index];
+                      const weatherCode = isToday
+                        ? weatherData.current.weather_code
+                        : weatherData.daily.weather_code[index];
                       const weatherDesc =
                         getWeatherDescription(weatherCode).split(" ")[0];
 
