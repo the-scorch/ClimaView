@@ -28,10 +28,10 @@ export default function App() {
 
         const [weatherResponse, airQualityResponse] = await Promise.all([
           fetch(
-            https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,is_day&hourly=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=7
+            `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,is_day&hourly=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=7`
           ),
           fetch(
-            https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=us_aqi,pm10,pm2_5&timezone=auto
+            `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${latitude}&longitude=${longitude}&current=us_aqi,pm10,pm2_5&timezone=auto`
           ),
         ]);
 
@@ -39,7 +39,7 @@ export default function App() {
         const airQuality = await airQualityResponse.json();
 
         setWeatherData({
-          location: ${name}, ${country},
+          location: `${name}, ${country}`,
           current: weather.current,
           hourly: weather.hourly,
           daily: weather.daily,
